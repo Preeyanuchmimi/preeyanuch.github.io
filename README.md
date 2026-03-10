@@ -1,1 +1,2 @@
 # preeyanuch.github.io
+<a href="./resume.pdf" download class="btn">Download Resume</a>
