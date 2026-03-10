@@ -3,28 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Portfolio - Video Editor</title>
 
 <style>
 
-body{
-font-family: Arial;
-margin:0;
-background:linear-gradient(135deg,#eef2f3,#dfe9f3);
+/* Smooth Scroll */
+html{
+scroll-behavior:smooth;
 }
 
-/* เมนู */
+body{
+margin:0;
+font-family:Arial;
+background:#f4f4f4;
+color:#333;
+transition:0.4s;
+}
+
+/* DARK MODE */
+
+body.dark{
+background:#0f172a;
+color:white;
+}
+
+/* NAV */
+
 nav{
 background:#111;
 padding:15px;
-text-align:center;
+display:flex;
+justify-content:center;
+gap:30px;
 position:sticky;
 top:0;
+z-index:999;
 }
 
 nav a{
 color:white;
-margin:15px;
 text-decoration:none;
 font-size:18px;
 }
@@ -33,74 +51,120 @@ nav a:hover{
 color:#00d9ff;
 }
 
-/* section */
-section{
-padding:60px 10%;
+/* Dark Button */
+
+.dark-btn{
+position:fixed;
+right:20px;
+bottom:20px;
+background:#111;
+color:white;
+border:none;
+padding:12px 15px;
+border-radius:30px;
+cursor:pointer;
+font-size:16px;
 }
 
-/* หน้าแรก */
-.home{
+/* HERO */
+
+.hero{
+min-height:80vh;
 display:flex;
-flex-wrap:wrap;
 align-items:center;
-gap:40px;
+justify-content:center;
+gap:60px;
+padding:60px 10%;
+flex-wrap:wrap;
 }
 
 .profile-img{
 width:300px;
-border-radius:15px;
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
-}
-
-.info{
-font-size:20px;
-background:white;
-padding:25px;
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,0.1);
-}
-
-.skill{
-margin-top:15px;
-}
-
-.skill span{
-background:#00d9ff;
-color:white;
-padding:6px 12px;
 border-radius:20px;
-margin:5px;
-display:inline-block;
-font-size:14px;
+box-shadow:0 20px 40px rgba(0,0,0,0.2);
 }
 
-/* งาน */
-.work{
+.hero-info h1{
+font-size:40px;
+margin-bottom:10px;
+}
+
+.hero-info p{
+font-size:18px;
+line-height:1.6;
+}
+
+/* BUTTON */
+
+.btn{
+display:inline-block;
+margin-top:20px;
+padding:12px 25px;
+background:#00d9ff;
+color:black;
+border-radius:30px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.btn:hover{
+transform:scale(1.05);
+}
+
+/* SECTION */
+
+section{
+padding:80px 10%;
+}
+
+/* CARD */
+
+.card{
 background:white;
 padding:30px;
 border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,0.1);
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+transition:0.4s;
 }
 
-/* gallery */
+body.dark .card{
+background:#1e293b;
+}
+
+/* SKILL */
+
+.skills span{
+background:#00d9ff;
+padding:7px 14px;
+border-radius:20px;
+margin:5px;
+display:inline-block;
+color:black;
+font-size:14px;
+}
+
+/* GALLERY */
+
 .gallery{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
 }
 
 .gallery img{
 width:100%;
 border-radius:10px;
 cursor:pointer;
-transition:0.3s;
+transition:0.4s;
 }
 
 .gallery img:hover{
-transform:scale(1.05);
+transform:scale(1.08);
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
 }
 
-/* video */
+/* VIDEO */
+
 .video iframe{
 width:100%;
 height:200px;
@@ -108,23 +172,8 @@ border:none;
 border-radius:10px;
 }
 
-/* contact */
-.contact{
-font-size:20px;
-background:white;
-padding:30px;
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,0.1);
-}
+/* LIGHTBOX */
 
-footer{
-text-align:center;
-padding:30px;
-background:#111;
-color:white;
-}
-
-/* Lightbox */
 .lightbox{
 position:fixed;
 top:0;
@@ -133,8 +182,8 @@ width:100%;
 height:100%;
 background:rgba(0,0,0,0.9);
 display:none;
-justify-content:center;
 align-items:center;
+justify-content:center;
 }
 
 .lightbox img{
@@ -147,16 +196,26 @@ border-radius:10px;
 display:flex;
 }
 
-/* responsive */
-@media(max-width:768px){
-.home{
-flex-direction:column;
-text-align:center;
+/* ANIMATION */
+
+.fade{
+opacity:0;
+transform:translateY(30px);
+transition:1s;
 }
 
-.profile-img{
-width:200px;
+.fade.show{
+opacity:1;
+transform:translateY(0);
 }
+
+/* FOOTER */
+
+footer{
+background:#111;
+color:white;
+text-align:center;
+padding:30px;
 }
 
 </style>
@@ -165,46 +224,68 @@ width:200px;
 <body>
 
 <nav>
+
 <a href="#home">หน้าแรก</a>
+<a href="#about">เกี่ยวกับ</a>
 <a href="#work">ประวัติการทำงาน</a>
 <a href="#portfolio">ผลงาน</a>
 <a href="#contact">ติดต่อ</a>
+
 </nav>
 
-<!-- หน้าแรก -->
-<section id="home">
+<!-- HERO -->
 
-<div class="home">
+<section id="home" class="hero fade">
 
 <img src="profile.jpg" class="profile-img">
 
-<div class="info">
+<div class="hero-info">
 
-<h1>Preeyanuch Beawbungkerd</h1>
+<h1>ชื่อ - นามสกุล</h1>
 
-<p><b>ชื่อเล่น :</b> Nuch </p>
+<p>ชื่อเล่น : ....</p>
 
-<p><b>อายุ :</b> 23 </p>
+<p>
+Video Editor / Graphic Designer  
+ผู้สร้างสรรค์สื่อดิจิทัล วิดีโอ และภาพคอนเทนต์
+สำหรับการตลาดออนไลน์และโซเชียลมีเดีย
+</p>
 
-<h3>การศึกษา</h3>
+<a href="resume.pdf" download class="btn">Download Resume</a>
 
-<p><b>ระดับ ปวส.</b><br>
-วิทยาลัยเทคนิคสมุทรสาคร<br>
-สาขา เทคโนโลยีสารสนเทศ</p>
+</div>
 
-<p><b>ระดับปริญญาตรี</b><br>
-วิทยาลัยเทคนิคสมุทรสาคร<br>
-สาขา เทคโนโลยีสารสนเทศ</p>
+</section>
 
-<h3>ทักษะ</h3>
+<!-- ABOUT -->
 
-<div class="skill">
+<section id="about" class="fade">
+
+<h2>การศึกษา</h2>
+
+<div class="card">
+
+<p><b>ระดับ ปวส.</b></p>
+<p>วิทยาลัยเทคนิคสมุทรสาคร</p>
+<p>สาขา เทคโนโลยีสารสนเทศ</p>
+
+<br>
+
+<p><b>ระดับปริญญาตรี</b></p>
+<p>วิทยาลัยเทคนิคสมุทรสาคร</p>
+<p>สาขา เทคโนโลยีสารสนเทศ</p>
+
+<br>
+
+<h3>Skills</h3>
+
+<div class="skills">
+
 <span>Video Editing</span>
 <span>Graphic Design</span>
 <span>AI Media</span>
 <span>Photography</span>
 <span>Content Creation</span>
-</div>
 
 </div>
 
@@ -212,32 +293,27 @@ width:200px;
 
 </section>
 
-<!-- ประวัติการทำงาน -->
-<section id="work">
+<!-- WORK -->
+
+<section id="work" class="fade">
 
 <h2>ประวัติการทำงาน</h2>
 
-<div class="work">
+<div class="card">
 
 <h3>บริษัท รับเบอร์โซล จำกัด</h3>
 
-<p>ปี 2567 - ปัจจุบัน</p>
+<p>2567 - ปัจจุบัน</p>
 
-<p><b>ตำแหน่ง :</b> Video Editor / Graphic Designer</p>
-
-<h4>หน้าที่รับผิดชอบ</h4>
+<p><b>ตำแหน่ง</b> Video Editor / Graphic Designer</p>
 
 <ul>
 
-<li>รับผิดชอบการถ่ายทำคลิปวีดีโอและถ่ายภาพสินค้า</li>
-
-<li>ตัดต่อคลิปวีดีโอสำหรับ Social Media เช่น Facebook / TikTok / YouTube</li>
-
-<li>ออกแบบภาพโฆษณา (Advertisement) และภาพคอนเทนต์</li>
-
-<li>สร้างสื่อด้วย AI เช่น Gen ภาพ AI และ Video AI</li>
-
-<li>วางคอนเซปต์คอนเทนต์และช่วยพัฒนาภาพลักษณ์ของแบรนด์</li>
+<li>ถ่ายทำวิดีโอและภาพสินค้า</li>
+<li>ตัดต่อวิดีโอสำหรับ Social Media</li>
+<li>ออกแบบภาพโฆษณา</li>
+<li>สร้างสื่อ AI</li>
+<li>พัฒนาคอนเทนต์สำหรับแบรนด์</li>
 
 </ul>
 
@@ -245,8 +321,9 @@ width:200px;
 
 </section>
 
-<!-- ผลงาน -->
-<section id="portfolio">
+<!-- PORTFOLIO -->
+
+<section id="portfolio" class="fade">
 
 <h2>ผลงาน</h2>
 
@@ -258,18 +335,13 @@ width:200px;
 <a href="#img2"><img src="img2.jpg"></a>
 <a href="#img3"><img src="img3.jpg"></a>
 <a href="#img4"><img src="img4.jpg"></a>
-<a href="#img5"><img src="img5.jpg"></a>
-<a href="#img6"><img src="img6.jpg"></a>
 
 </div>
 
-<!-- Lightbox -->
 <div id="img1" class="lightbox"><a href="#"><img src="img1.jpg"></a></div>
 <div id="img2" class="lightbox"><a href="#"><img src="img2.jpg"></a></div>
 <div id="img3" class="lightbox"><a href="#"><img src="img3.jpg"></a></div>
 <div id="img4" class="lightbox"><a href="#"><img src="img4.jpg"></a></div>
-<div id="img5" class="lightbox"><a href="#"><img src="img5.jpg"></a></div>
-<div id="img6" class="lightbox"><a href="#"><img src="img6.jpg"></a></div>
 
 <br><br>
 
@@ -279,24 +351,22 @@ width:200px;
 
 <iframe src="https://www.youtube.com/embed/VIDEOID1"></iframe>
 <iframe src="https://www.youtube.com/embed/VIDEOID2"></iframe>
-<iframe src="https://www.youtube.com/embed/VIDEOID3"></iframe>
 
 </div>
 
 </section>
 
-<!-- ติดต่อ -->
-<section id="contact">
+<!-- CONTACT -->
 
-<h2>ช่องทางการติดต่อ</h2>
+<section id="contact" class="fade">
 
-<div class="contact">
+<h2>ติดต่อ</h2>
 
-<p>📞 เบอร์โทร : 08X-XXX-XXXX</p>
+<div class="card">
 
-<p>📧 Email : yourmail@email.com</p>
-
-<p>💼 Facebook / Line / Portfolio Link</p>
+<p>📞 08X-XXX-XXXX</p>
+<p>📧 yourmail@email.com</p>
+<p>💬 Facebook / Line</p>
 
 </div>
 
@@ -307,6 +377,36 @@ width:200px;
 © Portfolio Website
 
 </footer>
+
+<button class="dark-btn" onclick="darkMode()">🌙</button>
+
+<script>
+
+/* DARK MODE */
+
+function darkMode(){
+document.body.classList.toggle("dark");
+}
+
+/* SCROLL ANIMATION */
+
+const faders=document.querySelectorAll(".fade");
+
+window.addEventListener("scroll",()=>{
+
+faders.forEach(el=>{
+
+const top=el.getBoundingClientRect().top;
+
+if(top<window.innerHeight-100){
+el.classList.add("show");
+}
+
+});
+
+});
+
+</script>
 
 </body>
 </html>
