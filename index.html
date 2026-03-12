@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Space Portfolio</title>
+<title>Portfolio - Video Editor</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 
 <style>
+
+/* SMOOTH */
 
 html{
 scroll-behavior:smooth;
@@ -20,33 +21,29 @@ scroll-behavior:smooth;
 body{
 margin:0;
 font-family:Arial;
-color:white;
-background:#020111;
+background:#f4f4f4;
+color:#333;
+transition:0.4s;
 overflow-x:hidden;
 }
 
-/* 3D GALAXY */
+/* DARK MODE */
 
-#galaxy-bg{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:-5;
+body.dark{
+background:#020617;
+color:white;
 }
 
-/* GLASSMORPHISM */
+/* GLOW */
 
-nav,.card{
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(15px);
-border:1px solid rgba(255,255,255,0.1);
+h1,h2,h3{
+text-shadow:0 0 10px rgba(0,217,255,0.6);
 }
 
 /* NAV */
 
 nav{
+background:#111;
 padding:15px;
 display:flex;
 justify-content:center;
@@ -63,8 +60,21 @@ font-size:18px;
 }
 
 nav a:hover{
-color:#00eaff;
-text-shadow:0 0 10px #00eaff;
+color:#00d9ff;
+}
+
+/* BUTTON */
+
+.dark-btn{
+position:fixed;
+right:20px;
+bottom:20px;
+background:#111;
+color:white;
+border:none;
+padding:12px 15px;
+border-radius:30px;
+cursor:pointer;
 }
 
 /* HERO */
@@ -77,13 +87,16 @@ justify-content:center;
 gap:60px;
 padding:60px 10%;
 flex-wrap:wrap;
-transition:transform 0.3s;
 }
 
 .profile-img{
 width:300px;
 border-radius:20px;
-box-shadow:0 0 30px #00eaff;
+box-shadow:0 20px 40px rgba(0,0,0,0.2);
+}
+
+.hero-info h1{
+font-size:40px;
 }
 
 /* BUTTON */
@@ -92,17 +105,11 @@ box-shadow:0 0 30px #00eaff;
 display:inline-block;
 margin-top:20px;
 padding:12px 25px;
-background:linear-gradient(45deg,#00eaff,#8a2be2);
-color:white;
+background:#00d9ff;
+color:black;
 border-radius:30px;
 text-decoration:none;
 font-weight:bold;
-transition:0.3s;
-}
-
-.btn:hover{
-transform:scale(1.1);
-box-shadow:0 0 20px #00eaff;
 }
 
 /* SECTION */
@@ -114,21 +121,25 @@ padding:80px 10%;
 /* CARD */
 
 .card{
+background:white;
 padding:30px;
-border-radius:20px;
-transition:0.4s;
+border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+body.dark .card{
+background:#1e293b;
 }
 
 /* SKILLS */
 
 .skills span{
-background:#00eaff;
+background:#00d9ff;
 padding:7px 14px;
 border-radius:20px;
 margin:5px;
 display:inline-block;
 color:black;
-font-size:14px;
 }
 
 /* GALLERY */
@@ -141,43 +152,28 @@ gap:25px;
 
 .gallery img{
 width:100%;
-border-radius:12px;
+border-radius:10px;
 cursor:pointer;
 transition:0.4s;
 }
 
 .gallery img:hover{
-transform:scale(1.1);
-box-shadow:0 0 25px #00eaff;
+transform:scale(1.08);
+}
+
+/* VIDEO */
+
+.video iframe{
+width:100%;
+height:200px;
+border:none;
+border-radius:10px;
+cursor:pointer;
 }
 
 /* LIGHTBOX */
 
 .lightbox{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.95);
-display:none;
-align-items:center;
-justify-content:center;
-}
-
-.lightbox img{
-max-width:90%;
-max-height:90%;
-border-radius:10px;
-}
-
-.lightbox:target{
-display:flex;
-}
-
-/* VIDEO POPUP */
-
-.video-modal{
 position:fixed;
 top:0;
 left:0;
@@ -190,77 +186,135 @@ justify-content:center;
 z-index:9999;
 }
 
-.video-modal iframe{
-width:80%;
-height:70%;
-border-radius:10px;
+.lightbox img{
+max-width:90%;
+max-height:90%;
 }
 
-.close-video{
-position:absolute;
-top:30px;
-right:40px;
-font-size:40px;
-cursor:pointer;
+.lightbox:target{
+display:flex;
 }
 
-/* METEOR */
+/* FADE */
 
-.meteor{
+.fade{
+opacity:0;
+transform:translateY(30px);
+transition:1s;
+}
+
+.fade.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* FOOTER */
+
+footer{
+background:#111;
+color:white;
+text-align:center;
+padding:30px;
+}
+
+/* THREEJS CANVAS */
+
+#space{
 position:fixed;
-width:2px;
-height:100px;
-background:linear-gradient(white,transparent);
-animation:meteorFall 3s linear forwards;
-}
-
-@keyframes meteorFall{
-0%{transform:translateY(-200px) translateX(0) rotate(45deg);}
-100%{transform:translateY(1000px) translateX(400px) rotate(45deg);opacity:0;}
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
 }
 
 /* ROCKET */
 
 .rocket{
 position:fixed;
-bottom:40px;
-right:40px;
-width:80px;
+bottom:120px;
+right:30px;
+font-size:40px;
 cursor:pointer;
+transition:0.3s;
 z-index:999;
 }
 
 .rocket:hover{
-transform:scale(1.2) rotate(10deg);
+transform:scale(1.2);
 }
 
-/* ORBIT STARS */
+/* PLANETS */
 
-.orbit-star{
+.planet{
 position:fixed;
-width:6px;
-height:6px;
-background:white;
-border-radius:50%;
-box-shadow:0 0 10px white;
+font-size:30px;
+animation:float 10s linear infinite;
 }
 
-/* CURSOR STAR */
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-30px)}
+100%{transform:translateY(0)}
+}
+
+/* SHOOTING STAR */
 
 .star{
 position:fixed;
-width:6px;
-height:6px;
+width:3px;
+height:3px;
 background:white;
-border-radius:50%;
-pointer-events:none;
 box-shadow:0 0 10px white;
+animation:shoot 2s linear;
 }
 
-footer{
-background:rgba(0,0,0,0.6);
-text-align:center;
-padding:30px;
+@keyframes shoot{
+
+0%{
+transform:translate(0,0);
+opacity:1;
+}
+
+100%{
+transform:translate(-500px,500px);
+opacity:0;
+}
+
+}
+
+/* VIDEO POPUP */
+
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.95);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+.popup iframe{
+width:80%;
+height:60%;
+border:none;
+}
+
+.popup.show{
+display:flex;
+}
+
+.close{
+position:absolute;
+top:20px;
+right:30px;
+font-size:30px;
+color:white;
+cursor:pointer;
 }
 
 </style>
@@ -268,23 +322,26 @@ padding:30px;
 
 <body>
 
-<div id="galaxy-bg"></div>
+<div id="space"></div>
 
-<img class="rocket" src="https://cdn-icons-png.flaticon.com/512/3212/3212608.png" onclick="launchRocket()">
+<div class="rocket" onclick="launchRocket()">🚀</div>
 
 <nav>
 <a href="#home">หน้าแรก</a>
+<a href="#about">เกี่ยวกับ</a>
 <a href="#work">ประวัติการทำงาน</a>
 <a href="#portfolio">ผลงาน</a>
 <a href="#contact">ติดต่อ</a>
 </nav>
 
-<section id="home" class="hero">
+<section id="home" class="hero fade">
 
 <img src="Portfolio.jpg" class="profile-img">
 
-<div>
+<div class="hero-info">
+
 <h1>Preeyanuch Beawbungkerd</h1>
+
 <p>ชื่อเล่น : Nuch</p>
 
 <p>
@@ -292,34 +349,51 @@ Video Editor / Graphic Designer
 ผู้สร้างสรรค์สื่อดิจิทัล วิดีโอ และภาพคอนเทนต์
 </p>
 
-<a href="resume.pdf" target="_blank" class="btn">📄 Resume</a>
+<a href="resume.pdf" class="btn">📄 Resume</a>
 <a href="#portfolio" class="btn">🎬 Portfolio</a>
 
 </div>
 
 </section>
+  <!-- EDUCATION -->
 
-<section id="work">
+<section id="about" class="fade">
 
-<h2>ประวัติการทำงาน</h2>
+<h2>ประวัติการศึกษา</h2>
 
 <div class="card">
 
-<h3>บริษัท รับเบอร์โซล จำกัด</h3>
+<h3>ระดับ ปวส.</h3>
 
-<p>2567 - ปัจจุบัน</p>
+<p><b>สถานศึกษา:</b> วิทยาลัยเทคนิคสมุทรสาคร</p>
 
-<p><b>ตำแหน่ง</b> Video Editor / Graphic Designer</p>
+<p><b>สาขา:</b> เทคโนโลยีสารสนเทศ</p>
 
-<ul>
+<p><b>ปีการศึกษา:</b> 2565 - 2567</p>
 
-<li>ถ่ายทำวิดีโอและภาพสินค้า</li>
-<li>ตัดต่อวิดีโอสำหรับ Social Media</li>
-<li>ออกแบบภาพโฆษณา</li>
-<li>สร้างสื่อ AI</li>
-<li>พัฒนาคอนเทนต์สำหรับแบรนด์</li>
+<br>
 
-</ul>
+<h3>ระดับปริญญาตรี</h3>
+
+<p><b>สถานศึกษา:</b> วิทยาลัยเทคนิคสมุทรสาคร</p>
+
+<p><b>สาขา:</b> เทคโนโลยีสารสนเทศ</p>
+
+<p><b>ปีการศึกษา:</b> กำลังศึกษา</p>
+
+<br>
+
+<h3>Skills</h3>
+
+<div class="skills">
+
+<span>Video Editing</span>
+<span>Graphic Design</span>
+<span>AI Media</span>
+<span>Photography</span>
+<span>Content Creation</span>
+
+</div>
 
 </div>
 
@@ -343,183 +417,151 @@ Video Editor / Graphic Designer
 <div id="img3" class="lightbox"><a href="#"><img src="Alice Valentine สีขาว2 .jpg"></a></div>
 <div id="img4" class="lightbox"><a href="#"><img src="Chrlotte Chainese.jpg"></a></div>
 
-<h3>ผลงานวิดีโอ</h3>
+<br><br>
 
-<div class="gallery">
+<div class="gallery video">
 
-<img src="https://img.youtube.com/vi/i6hYO9OqmsQ/hqdefault.jpg"
-style="width:100%;cursor:pointer;border-radius:10px"
-onclick="openVideo('https://www.youtube.com/embed/i6hYO9OqmsQ')">
+<iframe onclick="openVideo('https://www.youtube.com/embed/i6hYO9OqmsQ')" src="https://www.youtube.com/embed/i6hYO9OqmsQ"></iframe>
 
-</div>
-
-</section>
-
-<section id="contact">
-
-<h2>ติดต่อ</h2>
-
-<div class="card">
-
-<p>📞 08X-XXX-XXXX</p>
-<p>📧 yourmail@email.com</p>
-<p>💬 Facebook / Line</p>
+<iframe onclick="openVideo('https://www.youtube.com/embed/VIDEOID2')" src="https://www.youtube.com/embed/VIDEOID2"></iframe>
 
 </div>
 
 </section>
+
+<div id="videoPopup" class="popup">
+
+<span class="close" onclick="closeVideo()">✖</span>
+
+<iframe id="popupFrame"></iframe>
+
+</div>
 
 <footer>
-🚀 Space Portfolio
+
+© Portfolio Website
+
 </footer>
 
-<div class="video-modal" id="videoModal">
-
-<span class="close-video" onclick="closeVideo()">✖</span>
-
-<iframe id="videoFrame"></iframe>
-
-</div>
+<button class="dark-btn" onclick="darkMode()">🌙</button>
 
 <script>
 
-/* VIDEO POPUP */
+/* DARK MODE */
 
-function openVideo(link){
-
-document.getElementById("videoModal").style.display="flex";
-document.getElementById("videoFrame").src=link;
-
-}
-
-function closeVideo(){
-
-document.getElementById("videoModal").style.display="none";
-document.getElementById("videoFrame").src="";
-
+function darkMode(){
+document.body.classList.toggle("dark");
 }
 
 /* ROCKET */
 
 function launchRocket(){
-alert("🚀 Rocket Launch!");
-}
 
-/* METEOR RANDOM */
+const r=document.querySelector(".rocket")
 
-setInterval(()=>{
+r.style.transform="translateY(-400px)"
 
-let meteor=document.createElement("div");
-meteor.className="meteor";
-
-meteor.style.left=Math.random()*window.innerWidth+"px";
-
-document.body.appendChild(meteor);
-
-setTimeout(()=>meteor.remove(),3000);
-
-},2000);
-
-/* STAR CURSOR */
-
-document.addEventListener("mousemove",function(e){
-
-let star=document.createElement("div");
-star.className="star";
-
-star.style.left=e.pageX+"px";
-star.style.top=e.pageY+"px";
-
-document.body.appendChild(star);
-
-setTimeout(()=>star.remove(),500);
-
-});
-
-/* ORBIT STARS */
-
-for(let i=0;i<20;i++){
-
-let star=document.createElement("div");
-star.className="orbit-star";
-document.body.appendChild(star);
-
-let angle=Math.random()*360;
-let radius=200+Math.random()*400;
-
-setInterval(()=>{
-
-angle+=0.5;
-
-let x=window.innerWidth/2 + radius*Math.cos(angle*Math.PI/180);
-let y=window.innerHeight/2 + radius*Math.sin(angle*Math.PI/180);
-
-star.style.left=x+"px";
-star.style.top=y+"px";
-
-},30);
+setTimeout(()=>{
+r.style.transform="translateY(0)"
+},2000)
 
 }
 
-/* 3D GALAXY */
+/* SHOOTING STAR */
 
-const scene=new THREE.Scene();
+function createStar(){
 
-const camera=new THREE.PerspectiveCamera(
-75,
-window.innerWidth/window.innerHeight,
-0.1,
-1000
-);
+const star=document.createElement("div")
 
-const renderer=new THREE.WebGLRenderer({alpha:true});
-renderer.setSize(window.innerWidth,window.innerHeight);
+star.className="star"
 
-document.getElementById("galaxy-bg").appendChild(renderer.domElement);
+star.style.top=Math.random()*window.innerHeight+"px"
+star.style.left=Math.random()*window.innerWidth+"px"
 
-const starsGeometry=new THREE.BufferGeometry();
+document.body.appendChild(star)
 
-const starsCount=5000;
+setTimeout(()=>{
 
-const posArray=new Float32Array(starsCount*3);
+star.remove()
 
-for(let i=0;i<starsCount*3;i++){
-
-posArray[i]=(Math.random()-0.5)*2000;
+},2000)
 
 }
 
-starsGeometry.setAttribute(
-'position',
-new THREE.BufferAttribute(posArray,3)
-);
+setInterval(createStar,1500)
 
-const starsMaterial=new THREE.PointsMaterial({
-size:1,
-color:0xffffff
-});
+/* VIDEO POPUP */
 
-const starsMesh=new THREE.Points(
-starsGeometry,
-starsMaterial
-);
+function openVideo(src){
 
-scene.add(starsMesh);
+document.getElementById("videoPopup").classList.add("show")
 
-camera.position.z=5;
+document.getElementById("popupFrame").src=src
+
+}
+
+function closeVideo(){
+
+document.getElementById("videoPopup").classList.remove("show")
+
+document.getElementById("popupFrame").src=""
+
+}
+
+/* FADE */
+
+const faders=document.querySelectorAll(".fade")
+
+window.addEventListener("scroll",()=>{
+
+faders.forEach(el=>{
+
+const top=el.getBoundingClientRect().top
+
+if(top<window.innerHeight-100){
+
+el.classList.add("show")
+
+}
+
+})
+
+})
+
+/* THREE JS GALAXY */
+
+const scene=new THREE.Scene()
+
+const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000)
+
+const renderer=new THREE.WebGLRenderer({alpha:true})
+
+renderer.setSize(window.innerWidth,window.innerHeight)
+
+document.getElementById("space").appendChild(renderer.domElement)
+
+const geometry=new THREE.SphereGeometry(5,32,32)
+
+const material=new THREE.MeshBasicMaterial({wireframe:true,color:0x00d9ff})
+
+const planet=new THREE.Mesh(geometry,material)
+
+scene.add(planet)
+
+camera.position.z=10
 
 function animate(){
 
-requestAnimationFrame(animate);
+requestAnimationFrame(animate)
 
-starsMesh.rotation.y+=0.0005;
-starsMesh.rotation.x+=0.0002;
+planet.rotation.x+=0.003
+planet.rotation.y+=0.004
 
-renderer.render(scene,camera);
+renderer.render(scene,camera)
 
 }
 
-animate();
+animate()
 
 </script>
 
