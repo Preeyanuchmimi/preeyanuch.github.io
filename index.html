@@ -4,72 +4,100 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Portfolio - Video Editor</title>
+<title>Space Portfolio</title>
 
 <style>
 
-/* Smooth Scroll */
 html{
 scroll-behavior:smooth;
 }
 
+/* BODY */
+
 body{
 margin:0;
 font-family:Arial;
-background:#f4f4f4;
-color:#333;
-transition:0.4s;
+color:white;
+background:linear-gradient(120deg,#020111,#191621,#020111);
+background-size:400% 400%;
+animation:galaxy 20s ease infinite;
+cursor:url("https://cur.cursors-4u.net/nature/nat-10/nat972.cur"),auto;
 }
 
-/* DARK MODE */
+@keyframes galaxy{
 
-body.dark{
-background:#0f172a;
-color:white;
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+
+}
+
+/* ดาว */
+
+.stars{
+position:fixed;
+width:100%;
+height:100%;
+background:url("https://www.transparenttextures.com/patterns/stardust.png");
+opacity:0.5;
+z-index:-2;
+}
+
+/* ดาวตก */
+
+.shooting-star{
+position:fixed;
+top:0;
+left:50%;
+width:2px;
+height:120px;
+background:linear-gradient(white,transparent);
+animation:shoot 5s linear infinite;
+}
+
+@keyframes shoot{
+
+0%{
+transform:translateY(-200px) translateX(0) rotate(45deg);
+opacity:1;
+}
+
+100%{
+transform:translateY(900px) translateX(500px) rotate(45deg);
+opacity:0;
+}
+
 }
 
 /* NAV */
 
 nav{
-background:#111;
+background:rgba(0,0,0,0.8);
 padding:15px;
 display:flex;
 justify-content:center;
 gap:30px;
 position:sticky;
 top:0;
-z-index:999;
+backdrop-filter:blur(10px);
 }
 
 nav a{
 color:white;
 text-decoration:none;
 font-size:18px;
+transition:0.3s;
 }
 
 nav a:hover{
-color:#00d9ff;
-}
-
-/* Dark Button */
-
-.dark-btn{
-position:fixed;
-right:20px;
-bottom:20px;
-background:#111;
-color:white;
-border:none;
-padding:12px 15px;
-border-radius:30px;
-cursor:pointer;
-font-size:16px;
+color:#00eaff;
+text-shadow:0 0 10px #00eaff;
 }
 
 /* HERO */
 
 .hero{
-min-height:80vh;
+min-height:90vh;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -78,37 +106,38 @@ padding:60px 10%;
 flex-wrap:wrap;
 }
 
+/* PROFILE */
+
 .profile-img{
-width:300px;
+width:260px;
 border-radius:20px;
-box-shadow:0 20px 40px rgba(0,0,0,0.2);
+box-shadow:0 0 25px #00eaff;
+animation:glow 3s infinite alternate;
 }
 
-.hero-info h1{
-font-size:40px;
-margin-bottom:10px;
-}
+@keyframes glow{
 
-.hero-info p{
-font-size:18px;
-line-height:1.6;
+from{box-shadow:0 0 10px #00eaff;}
+to{box-shadow:0 0 40px #00eaff;}
+
 }
 
 /* BUTTON */
 
 .btn{
 display:inline-block;
-margin-top:20px;
+margin-top:15px;
 padding:12px 25px;
-background:#00d9ff;
-color:black;
+background:linear-gradient(45deg,#00eaff,#8a2be2);
+color:white;
 border-radius:30px;
 text-decoration:none;
-font-weight:bold;
+transition:0.3s;
 }
 
 .btn:hover{
-transform:scale(1.05);
+transform:scale(1.1);
+box-shadow:0 0 20px #00eaff;
 }
 
 /* SECTION */
@@ -120,27 +149,23 @@ padding:80px 10%;
 /* CARD */
 
 .card{
-background:white;
+background:rgba(255,255,255,0.05);
 padding:30px;
 border-radius:15px;
-box-shadow:0 10px 30px rgba(0,0,0,0.1);
-transition:0.4s;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.1);
+box-shadow:0 0 15px rgba(0,255,255,0.2);
 }
 
-body.dark .card{
-background:#1e293b;
-}
-
-/* SKILL */
+/* SKILLS */
 
 .skills span{
-background:#00d9ff;
-padding:7px 14px;
+background:#00eaff;
+padding:8px 15px;
 border-radius:20px;
 margin:5px;
 display:inline-block;
 color:black;
-font-size:14px;
 }
 
 /* GALLERY */
@@ -148,7 +173,7 @@ font-size:14px;
 .gallery{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:25px;
+gap:20px;
 }
 
 .gallery img{
@@ -160,21 +185,36 @@ transition:0.4s;
 
 .gallery img:hover{
 transform:scale(1.08);
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
+box-shadow:0 0 20px #00eaff;
 }
 
-/* VIDEO */
+/* VIDEO CARD */
 
-.video iframe{
+.video-card{
+position:relative;
+cursor:pointer;
+}
+
+.video-card img{
 width:100%;
-height:200px;
-border:none;
 border-radius:10px;
 }
 
-/* LIGHTBOX */
+.play-btn{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:40px;
+color:white;
+background:rgba(0,0,0,0.6);
+padding:15px 20px;
+border-radius:50%;
+}
 
-.lightbox{
+/* VIDEO POPUP */
+
+.video-popup{
 position:fixed;
 top:0;
 left:0;
@@ -184,23 +224,38 @@ background:rgba(0,0,0,0.9);
 display:none;
 align-items:center;
 justify-content:center;
+z-index:999;
 }
 
-.lightbox img{
-max-width:90%;
-max-height:90%;
+.video-popup iframe{
+width:80%;
+height:70%;
+border:none;
 border-radius:10px;
 }
 
-.lightbox:target{
-display:flex;
+.close{
+position:absolute;
+top:30px;
+right:40px;
+font-size:40px;
+cursor:pointer;
 }
 
-/* ANIMATION */
+/* CONTACT */
+
+footer{
+background:black;
+text-align:center;
+padding:30px;
+margin-top:40px;
+}
+
+/* SCROLL ANIMATION */
 
 .fade{
 opacity:0;
-transform:translateY(30px);
+transform:translateY(40px);
 transition:1s;
 }
 
@@ -209,24 +264,17 @@ opacity:1;
 transform:translateY(0);
 }
 
-/* FOOTER */
-
-footer{
-background:#111;
-color:white;
-text-align:center;
-padding:30px;
-}
-
 </style>
 </head>
 
 <body>
 
+<div class="stars"></div>
+<div class="shooting-star"></div>
+
 <nav>
 
 <a href="#home">หน้าแรก</a>
-<a href="#about">เกี่ยวกับ</a>
 <a href="#work">ประวัติการทำงาน</a>
 <a href="#portfolio">ผลงาน</a>
 <a href="#contact">ติดต่อ</a>
@@ -239,53 +287,18 @@ padding:30px;
 
 <img src="Portfolio.jpg" class="profile-img">
 
-<div class="hero-info">
+<div>
 
-<h1>Preeyanuch Beawbungkerd</h1>
+<h1 style="color:#00eaff">Preeyanuch Beawbungkerd</h1>
 
-<p>ชื่อเล่น : Nuch </p>
+<p>ชื่อเล่น : Nuch</p>
 
 <p>
-Video Editor / Graphic Designer  
-ผู้สร้างสรรค์สื่อดิจิทัล วิดีโอ และภาพคอนเทนต์
-สำหรับการตลาดออนไลน์และโซเชียลมีเดีย
+Video Editor / Graphic Designer
+ผู้สร้างสรรค์สื่อดิจิทัล
 </p>
 
-<a href="resume.pdf" target="_blank" class="btn">📄 Download Resume</a>
-
-<a href="#portfolio" class="btn">🎬 View Portfolio</a>
-
-</div>
-
-</section>
-
- <h2> การศึกษา </h2>
-
-<div class="card">
-
-<p><b>ระดับ ปวส.</b></p>
-<p>วิทยาลัยเทคนิคสมุทรสาคร</p>
-<p>สาขา เทคโนโลยีสารสนเทศ</p>
-
-<br>
-
-<p><b>ระดับปริญญาตรี</b></p>
-<p>วิทยาลัยเทคนิคสมุทรสาคร</p>
-<p>สาขา เทคโนโลยีสารสนเทศ</p>
-
-<br>
-
-<h3>Skills</h3>
-
-<div class="skills">
-
-<span>Video Editing</span>
-<span>Graphic Design</span>
-<span>AI Media</span>
-<span>Photography</span>
-<span>Content Creation</span>
-
-</div>
+<a href="#portfolio" class="btn">🎬 Portfolio</a>
 
 </div>
 
@@ -303,15 +316,13 @@ Video Editor / Graphic Designer
 
 <p>2567 - ปัจจุบัน</p>
 
-<p><b>ตำแหน่ง</b> Video Editor / Graphic Designer</p>
+<p>ตำแหน่ง Video Editor / Graphic Designer</p>
 
 <ul>
 
-<li>ถ่ายทำวิดีโอและภาพสินค้า</li>
-<li>ตัดต่อวิดีโอสำหรับ Social Media</li>
+<li>ถ่ายทำวิดีโอ</li>
+<li>ตัดต่อคลิป Social Media</li>
 <li>ออกแบบภาพโฆษณา</li>
-<li>สร้างสื่อ AI</li>
-<li>พัฒนาคอนเทนต์สำหรับแบรนด์</li>
 
 </ul>
 
@@ -323,67 +334,33 @@ Video Editor / Graphic Designer
 
 <section id="portfolio" class="fade">
 
-<h2>ผลงาน</h2>
-
-<h3>ผลงานภาพ</h3>
+<h2>ผลงานวิดีโอ</h2>
 
 <div class="gallery">
-ภาพสื่อโดยใช้ Ai
-<a href="#img1"><img src="Aira-2.jpg"></a>
-<a href="#img2"><img src="Alice Summer.jpg"></a>
-<a href="#img3"><img src="Alice Valentine สีขาว2 .jpg"></a>
-<a href="#img4"><img src="Chrlotte Chainese.jpg"></a>
 
+<div class="video-card" onclick="openVideo('https://www.youtube.com/embed/i6hYO9OqmsQ')">
+<img src="https://img.youtube.com/vi/i6hYO9OqmsQ/hqdefault.jpg">
+<div class="play-btn">▶</div>
 </div>
 
-<div id="img1" class="lightbox"><a href="#"><img src="Aira-2.jpg"></a></div>
-<div id="img2" class="lightbox"><a href="#"><img src="Alice Summer.jpg"></a></div>
-<div id="img3" class="lightbox"><a href="#"><img src="Alice Valentine สีขาว2 .jpg"></a></div>
-<div id="img4" class="lightbox"><a href="#"><img src="Chrlotte Chainese.jpg"></a></div>
-
-<br><br>
-
-<div class="gallery">
-ภาพสื่อ/ภาพโปรโมชั่น
-<a href="#img1"><img src="Monobo.jpg"></a>
-<a href="#img2"><img src="Mid Mounth Lazada.jpg"></a>
-<a href="#img3"><img src="Mary Jane 1.jpg"></a>
-<a href="#img4"><img src="High Muffin.jpg"></a>
-
+<div class="video-card" onclick="openVideo('https://drive.google.com/file/d/FILEID/preview')">
+<img src="video-thumb.jpg">
+<div class="play-btn">▶</div>
 </div>
-
-<div id="img1" class="lightbox"><a href="#"><img src="Monobo.jpg"></a></div>
-<div id="img2" class="lightbox"><a href="#"><img src="Mid Mounth Lazada.jpg"></a></div>
-<div id="img3" class="lightbox"><a href="#"><img src="Mary Jane 1.jpg"></a></div>
-<div id="img4" class="lightbox"><a href="#"><img src="High Muffin.jpg"></a></div>
-
-<br><br>
-
-<div class="gallery">
-ภาพ AD ต่างๆ
-<a href="#img1"><img src="แก้ Becca Craft คน 17-12-68.jpg"></a>
-<a href="#img2"><img src="Zoey Silk ขาว 13-12-68.jpg"></a>
-<a href="#img3"><img src="Diamond 6-12-68 .jpg"></a>
-<a href="#img4"><img src="Unique Lilt 21-02-69 .jpg"></a>
-</div>
-
-<div id="img1" class="lightbox"><a href="#"><img src="แก้ Becca Craft คน 17-12-68.jpg"></a></div>
-<div id="img2" class="lightbox"><a href="#"><img src="Zoey Silk ขาว 13-12-68.jpg"></a></div>
-<div id="img3" class="lightbox"><a href="#"><img src="Diamond 6-12-68 .jpg"></a></div>
-<div id="img4" class="lightbox"><a href="#"><img src="Unique Lilt 21-02-69 .jpg"></a></div>
-<br><br>
-
-
-<h3>ผลงานวิดีโอ</h3>
-
-<div class="gallery video">
-คลิปวีดีโออินฟลู
-<iframe src="https://youtu.be/i6hYO9OqmsQ"></iframe>
-<iframe src="https://www.youtube.com/embed/VIDEOID2"></iframe>
 
 </div>
 
 </section>
+
+<!-- VIDEO POPUP -->
+
+<div class="video-popup" id="videoPopup">
+
+<span class="close" onclick="closeVideo()">✖</span>
+
+<iframe id="videoFrame"></iframe>
+
+</div>
 
 <!-- CONTACT -->
 
@@ -403,19 +380,11 @@ Video Editor / Graphic Designer
 
 <footer>
 
-© Portfolio Website
+🚀 Space Portfolio
 
 </footer>
 
-<button class="dark-btn" onclick="darkMode()">🌙</button>
-
 <script>
-
-/* DARK MODE */
-
-function darkMode(){
-document.body.classList.toggle("dark");
-}
 
 /* SCROLL ANIMATION */
 
@@ -434,6 +403,22 @@ el.classList.add("show");
 });
 
 });
+
+/* VIDEO POPUP */
+
+function openVideo(link){
+
+document.getElementById("videoPopup").style.display="flex";
+document.getElementById("videoFrame").src=link;
+
+}
+
+function closeVideo(){
+
+document.getElementById("videoPopup").style.display="none";
+document.getElementById("videoFrame").src="";
+
+}
 
 </script>
 
