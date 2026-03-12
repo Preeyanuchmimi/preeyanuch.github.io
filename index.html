@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Space Portfolio</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 
 <style>
 
@@ -18,75 +21,45 @@ body{
 margin:0;
 font-family:Arial;
 color:white;
-background:linear-gradient(120deg,#020111,#191621,#020111);
-background-size:400% 400%;
-animation:galaxy 20s ease infinite;
-cursor:url("https://cur.cursors-4u.net/nature/nat-10/nat972.cur"),auto;
+background:#020111;
+overflow-x:hidden;
 }
 
-@keyframes galaxy{
+/* 3D GALAXY */
 
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
-
-}
-
-/* ดาว */
-
-.stars{
-position:fixed;
-width:100%;
-height:100%;
-background:url("https://www.transparenttextures.com/patterns/stardust.png");
-opacity:0.5;
-z-index:-2;
-}
-
-/* ดาวตก */
-
-.shooting-star{
+#galaxy-bg{
 position:fixed;
 top:0;
-left:50%;
-width:2px;
-height:120px;
-background:linear-gradient(white,transparent);
-animation:shoot 5s linear infinite;
+left:0;
+width:100%;
+height:100%;
+z-index:-5;
 }
 
-@keyframes shoot{
+/* GLASSMORPHISM */
 
-0%{
-transform:translateY(-200px) translateX(0) rotate(45deg);
-opacity:1;
-}
-
-100%{
-transform:translateY(900px) translateX(500px) rotate(45deg);
-opacity:0;
-}
-
+nav,.card{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.1);
 }
 
 /* NAV */
 
 nav{
-background:rgba(0,0,0,0.8);
 padding:15px;
 display:flex;
 justify-content:center;
 gap:30px;
 position:sticky;
 top:0;
-backdrop-filter:blur(10px);
+z-index:999;
 }
 
 nav a{
 color:white;
 text-decoration:none;
 font-size:18px;
-transition:0.3s;
 }
 
 nav a:hover{
@@ -97,41 +70,33 @@ text-shadow:0 0 10px #00eaff;
 /* HERO */
 
 .hero{
-min-height:90vh;
+min-height:80vh;
 display:flex;
 align-items:center;
 justify-content:center;
 gap:60px;
 padding:60px 10%;
 flex-wrap:wrap;
+transition:transform 0.3s;
 }
-
-/* PROFILE */
 
 .profile-img{
-width:260px;
+width:300px;
 border-radius:20px;
-box-shadow:0 0 25px #00eaff;
-animation:glow 3s infinite alternate;
-}
-
-@keyframes glow{
-
-from{box-shadow:0 0 10px #00eaff;}
-to{box-shadow:0 0 40px #00eaff;}
-
+box-shadow:0 0 30px #00eaff;
 }
 
 /* BUTTON */
 
 .btn{
 display:inline-block;
-margin-top:15px;
+margin-top:20px;
 padding:12px 25px;
 background:linear-gradient(45deg,#00eaff,#8a2be2);
 color:white;
 border-radius:30px;
 text-decoration:none;
+font-weight:bold;
 transition:0.3s;
 }
 
@@ -149,23 +114,21 @@ padding:80px 10%;
 /* CARD */
 
 .card{
-background:rgba(255,255,255,0.05);
 padding:30px;
-border-radius:15px;
-backdrop-filter:blur(10px);
-border:1px solid rgba(255,255,255,0.1);
-box-shadow:0 0 15px rgba(0,255,255,0.2);
+border-radius:20px;
+transition:0.4s;
 }
 
 /* SKILLS */
 
 .skills span{
 background:#00eaff;
-padding:8px 15px;
+padding:7px 14px;
 border-radius:20px;
 margin:5px;
 display:inline-block;
 color:black;
+font-size:14px;
 }
 
 /* GALLERY */
@@ -173,48 +136,48 @@ color:black;
 .gallery{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
+gap:25px;
 }
 
 .gallery img{
 width:100%;
-border-radius:10px;
+border-radius:12px;
 cursor:pointer;
 transition:0.4s;
 }
 
 .gallery img:hover{
-transform:scale(1.08);
-box-shadow:0 0 20px #00eaff;
+transform:scale(1.1);
+box-shadow:0 0 25px #00eaff;
 }
 
-/* VIDEO CARD */
+/* LIGHTBOX */
 
-.video-card{
-position:relative;
-cursor:pointer;
-}
-
-.video-card img{
+.lightbox{
+position:fixed;
+top:0;
+left:0;
 width:100%;
+height:100%;
+background:rgba(0,0,0,0.95);
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+.lightbox img{
+max-width:90%;
+max-height:90%;
 border-radius:10px;
 }
 
-.play-btn{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-font-size:40px;
-color:white;
-background:rgba(0,0,0,0.6);
-padding:15px 20px;
-border-radius:50%;
+.lightbox:target{
+display:flex;
 }
 
 /* VIDEO POPUP */
 
-.video-popup{
+.video-modal{
 position:fixed;
 top:0;
 left:0;
@@ -224,17 +187,16 @@ background:rgba(0,0,0,0.9);
 display:none;
 align-items:center;
 justify-content:center;
-z-index:999;
+z-index:9999;
 }
 
-.video-popup iframe{
+.video-modal iframe{
 width:80%;
 height:70%;
-border:none;
 border-radius:10px;
 }
 
-.close{
+.close-video{
 position:absolute;
 top:30px;
 right:40px;
@@ -242,26 +204,63 @@ font-size:40px;
 cursor:pointer;
 }
 
-/* CONTACT */
+/* METEOR */
+
+.meteor{
+position:fixed;
+width:2px;
+height:100px;
+background:linear-gradient(white,transparent);
+animation:meteorFall 3s linear forwards;
+}
+
+@keyframes meteorFall{
+0%{transform:translateY(-200px) translateX(0) rotate(45deg);}
+100%{transform:translateY(1000px) translateX(400px) rotate(45deg);opacity:0;}
+}
+
+/* ROCKET */
+
+.rocket{
+position:fixed;
+bottom:40px;
+right:40px;
+width:80px;
+cursor:pointer;
+z-index:999;
+}
+
+.rocket:hover{
+transform:scale(1.2) rotate(10deg);
+}
+
+/* ORBIT STARS */
+
+.orbit-star{
+position:fixed;
+width:6px;
+height:6px;
+background:white;
+border-radius:50%;
+box-shadow:0 0 10px white;
+}
+
+/* CURSOR STAR */
+
+.star{
+position:fixed;
+width:6px;
+height:6px;
+background:white;
+border-radius:50%;
+pointer-events:none;
+box-shadow:0 0 10px white;
+}
 
 footer{
-background:black;
+background:rgba(0,0,0,0.6);
 text-align:center;
 padding:30px;
-margin-top:40px;
-}
-
-/* SCROLL ANIMATION */
-
-.fade{
-opacity:0;
-transform:translateY(40px);
-transition:1s;
-}
-
-.fade.show{
-opacity:1;
-transform:translateY(0);
 }
 
 </style>
@@ -269,44 +268,38 @@ transform:translateY(0);
 
 <body>
 
-<div class="stars"></div>
-<div class="shooting-star"></div>
+<div id="galaxy-bg"></div>
+
+<img class="rocket" src="https://cdn-icons-png.flaticon.com/512/3212/3212608.png" onclick="launchRocket()">
 
 <nav>
-
 <a href="#home">หน้าแรก</a>
 <a href="#work">ประวัติการทำงาน</a>
 <a href="#portfolio">ผลงาน</a>
 <a href="#contact">ติดต่อ</a>
-
 </nav>
 
-<!-- HERO -->
-
-<section id="home" class="hero fade">
+<section id="home" class="hero">
 
 <img src="Portfolio.jpg" class="profile-img">
 
 <div>
-
-<h1 style="color:#00eaff">Preeyanuch Beawbungkerd</h1>
-
+<h1>Preeyanuch Beawbungkerd</h1>
 <p>ชื่อเล่น : Nuch</p>
 
 <p>
-Video Editor / Graphic Designer
-ผู้สร้างสรรค์สื่อดิจิทัล
+Video Editor / Graphic Designer  
+ผู้สร้างสรรค์สื่อดิจิทัล วิดีโอ และภาพคอนเทนต์
 </p>
 
+<a href="resume.pdf" target="_blank" class="btn">📄 Resume</a>
 <a href="#portfolio" class="btn">🎬 Portfolio</a>
 
 </div>
 
 </section>
 
-<!-- WORK -->
-
-<section id="work" class="fade">
+<section id="work">
 
 <h2>ประวัติการทำงาน</h2>
 
@@ -316,13 +309,15 @@ Video Editor / Graphic Designer
 
 <p>2567 - ปัจจุบัน</p>
 
-<p>ตำแหน่ง Video Editor / Graphic Designer</p>
+<p><b>ตำแหน่ง</b> Video Editor / Graphic Designer</p>
 
 <ul>
 
-<li>ถ่ายทำวิดีโอ</li>
-<li>ตัดต่อคลิป Social Media</li>
+<li>ถ่ายทำวิดีโอและภาพสินค้า</li>
+<li>ตัดต่อวิดีโอสำหรับ Social Media</li>
 <li>ออกแบบภาพโฆษณา</li>
+<li>สร้างสื่อ AI</li>
+<li>พัฒนาคอนเทนต์สำหรับแบรนด์</li>
 
 </ul>
 
@@ -330,41 +325,37 @@ Video Editor / Graphic Designer
 
 </section>
 
-<!-- PORTFOLIO -->
+<section id="portfolio">
 
-<section id="portfolio" class="fade">
-
-<h2>ผลงานวิดีโอ</h2>
+<h2>ผลงาน</h2>
 
 <div class="gallery">
 
-<div class="video-card" onclick="openVideo('https://www.youtube.com/embed/i6hYO9OqmsQ')">
-<img src="https://img.youtube.com/vi/i6hYO9OqmsQ/hqdefault.jpg">
-<div class="play-btn">▶</div>
+<a href="#img1"><img src="Aira-2.jpg"></a>
+<a href="#img2"><img src="Alice Summer.jpg"></a>
+<a href="#img3"><img src="Alice Valentine สีขาว2 .jpg"></a>
+<a href="#img4"><img src="Chrlotte Chainese.jpg"></a>
+
 </div>
 
-<div class="video-card" onclick="openVideo('https://drive.google.com/file/d/FILEID/preview')">
-<img src="video-thumb.jpg">
-<div class="play-btn">▶</div>
-</div>
+<div id="img1" class="lightbox"><a href="#"><img src="Aira-2.jpg"></a></div>
+<div id="img2" class="lightbox"><a href="#"><img src="Alice Summer.jpg"></a></div>
+<div id="img3" class="lightbox"><a href="#"><img src="Alice Valentine สีขาว2 .jpg"></a></div>
+<div id="img4" class="lightbox"><a href="#"><img src="Chrlotte Chainese.jpg"></a></div>
+
+<h3>ผลงานวิดีโอ</h3>
+
+<div class="gallery">
+
+<img src="https://img.youtube.com/vi/i6hYO9OqmsQ/hqdefault.jpg"
+style="width:100%;cursor:pointer;border-radius:10px"
+onclick="openVideo('https://www.youtube.com/embed/i6hYO9OqmsQ')">
 
 </div>
 
 </section>
 
-<!-- VIDEO POPUP -->
-
-<div class="video-popup" id="videoPopup">
-
-<span class="close" onclick="closeVideo()">✖</span>
-
-<iframe id="videoFrame"></iframe>
-
-</div>
-
-<!-- CONTACT -->
-
-<section id="contact" class="fade">
+<section id="contact">
 
 <h2>ติดต่อ</h2>
 
@@ -379,46 +370,156 @@ Video Editor / Graphic Designer
 </section>
 
 <footer>
-
 🚀 Space Portfolio
-
 </footer>
 
+<div class="video-modal" id="videoModal">
+
+<span class="close-video" onclick="closeVideo()">✖</span>
+
+<iframe id="videoFrame"></iframe>
+
+</div>
+
 <script>
-
-/* SCROLL ANIMATION */
-
-const faders=document.querySelectorAll(".fade");
-
-window.addEventListener("scroll",()=>{
-
-faders.forEach(el=>{
-
-const top=el.getBoundingClientRect().top;
-
-if(top<window.innerHeight-100){
-el.classList.add("show");
-}
-
-});
-
-});
 
 /* VIDEO POPUP */
 
 function openVideo(link){
 
-document.getElementById("videoPopup").style.display="flex";
+document.getElementById("videoModal").style.display="flex";
 document.getElementById("videoFrame").src=link;
 
 }
 
 function closeVideo(){
 
-document.getElementById("videoPopup").style.display="none";
+document.getElementById("videoModal").style.display="none";
 document.getElementById("videoFrame").src="";
 
 }
+
+/* ROCKET */
+
+function launchRocket(){
+alert("🚀 Rocket Launch!");
+}
+
+/* METEOR RANDOM */
+
+setInterval(()=>{
+
+let meteor=document.createElement("div");
+meteor.className="meteor";
+
+meteor.style.left=Math.random()*window.innerWidth+"px";
+
+document.body.appendChild(meteor);
+
+setTimeout(()=>meteor.remove(),3000);
+
+},2000);
+
+/* STAR CURSOR */
+
+document.addEventListener("mousemove",function(e){
+
+let star=document.createElement("div");
+star.className="star";
+
+star.style.left=e.pageX+"px";
+star.style.top=e.pageY+"px";
+
+document.body.appendChild(star);
+
+setTimeout(()=>star.remove(),500);
+
+});
+
+/* ORBIT STARS */
+
+for(let i=0;i<20;i++){
+
+let star=document.createElement("div");
+star.className="orbit-star";
+document.body.appendChild(star);
+
+let angle=Math.random()*360;
+let radius=200+Math.random()*400;
+
+setInterval(()=>{
+
+angle+=0.5;
+
+let x=window.innerWidth/2 + radius*Math.cos(angle*Math.PI/180);
+let y=window.innerHeight/2 + radius*Math.sin(angle*Math.PI/180);
+
+star.style.left=x+"px";
+star.style.top=y+"px";
+
+},30);
+
+}
+
+/* 3D GALAXY */
+
+const scene=new THREE.Scene();
+
+const camera=new THREE.PerspectiveCamera(
+75,
+window.innerWidth/window.innerHeight,
+0.1,
+1000
+);
+
+const renderer=new THREE.WebGLRenderer({alpha:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+
+document.getElementById("galaxy-bg").appendChild(renderer.domElement);
+
+const starsGeometry=new THREE.BufferGeometry();
+
+const starsCount=5000;
+
+const posArray=new Float32Array(starsCount*3);
+
+for(let i=0;i<starsCount*3;i++){
+
+posArray[i]=(Math.random()-0.5)*2000;
+
+}
+
+starsGeometry.setAttribute(
+'position',
+new THREE.BufferAttribute(posArray,3)
+);
+
+const starsMaterial=new THREE.PointsMaterial({
+size:1,
+color:0xffffff
+});
+
+const starsMesh=new THREE.Points(
+starsGeometry,
+starsMaterial
+);
+
+scene.add(starsMesh);
+
+camera.position.z=5;
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+starsMesh.rotation.y+=0.0005;
+starsMesh.rotation.x+=0.0002;
+
+renderer.render(scene,camera);
+
+}
+
+animate();
 
 </script>
 
