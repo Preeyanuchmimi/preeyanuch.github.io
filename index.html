@@ -8,7 +8,6 @@
 
 <style>
 
-/* Smooth Scroll */
 html{
 scroll-behavior:smooth;
 }
@@ -20,8 +19,6 @@ background:#f4f4f4;
 color:#333;
 transition:0.4s;
 }
-
-/* DARK MODE */
 
 body.dark{
 background:#0f172a;
@@ -51,7 +48,7 @@ nav a:hover{
 color:#00d9ff;
 }
 
-/* Dark Button */
+/* DARK MODE BUTTON */
 
 .dark-btn{
 position:fixed;
@@ -163,16 +160,7 @@ transform:scale(1.08);
 box-shadow:0 10px 30px rgba(0,0,0,0.2);
 }
 
-/* VIDEO */
-
-.video iframe{
-width:100%;
-height:200px;
-border:none;
-border-radius:10px;
-}
-
-/* LIGHTBOX */
+/* LIGHTBOX IMAGE */
 
 .lightbox{
 position:fixed;
@@ -194,6 +182,51 @@ border-radius:10px;
 
 .lightbox:target{
 display:flex;
+}
+
+/* VIDEO */
+
+.video-box{
+position:relative;
+cursor:pointer;
+}
+
+.video-box img{
+width:100%;
+border-radius:10px;
+}
+
+/* VIDEO POPUP */
+
+.video-popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+.video-popup iframe{
+width:80%;
+height:80%;
+border:none;
+border-radius:10px;
+}
+
+/* CLOSE BUTTON */
+
+.close{
+position:absolute;
+top:40px;
+right:60px;
+font-size:35px;
+color:white;
+cursor:pointer;
 }
 
 /* ANIMATION */
@@ -233,8 +266,6 @@ padding:30px;
 
 </nav>
 
-<!-- HERO -->
-
 <section id="home" class="hero fade">
 
 <img src="Portfolio.jpg" class="profile-img">
@@ -252,14 +283,15 @@ Video Editor / Graphic Designer
 </p>
 
 <a href="resume.pdf" target="_blank" class="btn">📄 Download Resume</a>
-
 <a href="#portfolio" class="btn">🎬 View Portfolio</a>
 
 </div>
 
 </section>
 
- <h2> การศึกษา </h2>
+<section class="fade">
+
+<h2>การศึกษา</h2>
 
 <div class="card">
 
@@ -272,8 +304,6 @@ Video Editor / Graphic Designer
 <p><b>ระดับปริญญาตรี</b></p>
 <p>วิทยาลัยเทคนิคสมุทรสาคร</p>
 <p>สาขา เทคโนโลยีสารสนเทศ</p>
-
-<br>
 
 <h3>Skills</h3>
 
@@ -290,8 +320,6 @@ Video Editor / Graphic Designer
 </div>
 
 </section>
-
-<!-- WORK -->
 
 <section id="work" class="fade">
 
@@ -319,11 +347,8 @@ Video Editor / Graphic Designer
 
 </section>
 
-<!-- PORTFOLIO -->
-
 <section id="portfolio" class="fade">
-
-<h2>ผลงาน</h2>
+ <h2>ผลงาน</h2>
 
 <h3>ผลงานภาพ</h3>
 
@@ -373,21 +398,29 @@ Video Editor / Graphic Designer
 <div id="img4" class="lightbox"><a href="#"><img src="Unique Lilt 21-02-69 .jpg"></a></div>
 <br><br>
 
+<h2>ผลงานวิดีโอ</h2>
 
-<h3>ผลงานวิดีโอ</h3>
+<div class="gallery">
 
-<div class="gallery video">
-คลิปวีดีโออินฟลู
+<div class="video-box" onclick="openVideo('1VIDEOFILEID')">
+<img src="video1.jpg">
+</div>
 
-<iframe src="https://drive.google.com/drive/folders/1s77hQEVffTKmgw3u5y82pxhoSZfKBLVT?usp=sharing" allow="autoplay"></iframe>
-
-<iframe src="https://drive.google.com/file/d/FILE_ID2/preview" allow="autoplay"></iframe>
+<div class="video-box" onclick="openVideo('2VIDEOFILEID')">
+<img src="video2.jpg">
+</div>
 
 </div>
 
 </section>
 
-<!-- CONTACT -->
+<div class="video-popup" id="videoPopup">
+
+<div class="close" onclick="closeVideo()">❌</div>
+
+<iframe id="videoFrame"></iframe>
+
+</div>
 
 <section id="contact" class="fade">
 
@@ -404,38 +437,37 @@ Video Editor / Graphic Designer
 </section>
 
 <footer>
-
 © Portfolio Website
-
 </footer>
 
 <button class="dark-btn" onclick="darkMode()">🌙</button>
 
 <script>
 
-/* DARK MODE */
-
 function darkMode(){
 document.body.classList.toggle("dark");
 }
 
-/* SCROLL ANIMATION */
-
 const faders=document.querySelectorAll(".fade");
 
 window.addEventListener("scroll",()=>{
-
 faders.forEach(el=>{
-
 const top=el.getBoundingClientRect().top;
-
 if(top<window.innerHeight-100){
 el.classList.add("show");
 }
-
+});
 });
 
-});
+function openVideo(id){
+document.getElementById("videoPopup").style.display="flex";
+document.getElementById("videoFrame").src="https://drive.google.com/file/d/"+id+"/preview";
+}
+
+function closeVideo(){
+document.getElementById("videoPopup").style.display="none";
+document.getElementById("videoFrame").src="";
+}
 
 </script>
 
