@@ -8,8 +8,9 @@
 
 <style>
 
-/* Smooth Scroll */
-html{scroll-behavior:smooth;}
+html{
+scroll-behavior:smooth;
+}
 
 body{
 margin:0;
@@ -18,6 +19,8 @@ background:#f4f4f4;
 color:#333;
 transition:0.4s;
 }
+
+/* DARK MODE */
 
 body.dark{
 background:#0f172a;
@@ -156,42 +159,21 @@ transition:0.4s;
 
 .gallery img:hover{
 transform:scale(1.08);
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
 }
 
 /* VIDEO */
 
 .video iframe{
 width:100%;
-height:200px;
+height:220px;
 border:none;
 border-radius:10px;
 }
 
-/* NETFLIX VIDEO POPUP */
+/* LIGHTBOX */
 
-.video-card{
-cursor:pointer;
-position:relative;
-}
-
-.video-card img{
-width:100%;
-border-radius:10px;
-}
-
-.play-btn{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-font-size:40px;
-color:white;
-}
-
-/* POPUP */
-
-.video-popup{
+.lightbox{
 position:fixed;
 top:0;
 left:0;
@@ -204,72 +186,30 @@ justify-content:center;
 z-index:9999;
 }
 
-.video-popup iframe{
-width:80%;
-height:70%;
-border:none;
+.lightbox img{
+max-width:90%;
+max-height:80%;
 border-radius:10px;
 }
 
-.close-video{
+/* ปุ่มกากบาท */
+
+.close-btn{
 position:absolute;
 top:30px;
 right:40px;
 font-size:40px;
 color:white;
-cursor:pointer;
+text-decoration:none;
+font-weight:bold;
 }
 
-/* SLIDER */
-
-.slider{
-position:relative;
-overflow:hidden;
+.close-btn:hover{
+color:#ff4d4d;
 }
 
-.slide-track{
+.lightbox:target{
 display:flex;
-transition:0.5s;
-}
-
-.slide-track img{
-width:100%;
-max-width:300px;
-margin-right:20px;
-border-radius:10px;
-}
-
-.slide-btn{
-position:absolute;
-top:40%;
-background:#111;
-color:white;
-border:none;
-padding:10px 15px;
-cursor:pointer;
-}
-
-.prev{left:0;}
-.next{right:0;}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-.hero{
-flex-direction:column;
-text-align:center;
-}
-
-.profile-img{
-width:200px;
-}
-
-.video-popup iframe{
-width:95%;
-height:40%;
-}
-
 }
 
 /* ANIMATION */
@@ -309,6 +249,8 @@ padding:30px;
 
 </nav>
 
+<!-- HERO -->
+
 <section id="home" class="hero fade">
 
 <img src="Portfolio.jpg" class="profile-img">
@@ -317,68 +259,76 @@ padding:30px;
 
 <h1>Preeyanuch Beawbungkerd</h1>
 
-<p>ชื่อเล่น : Nuch </p>
+<p>ชื่อเล่น : Nuch</p>
 
 <p>
 Video Editor / Graphic Designer  
 ผู้สร้างสรรค์สื่อดิจิทัล วิดีโอ และภาพคอนเทนต์
+สำหรับการตลาดออนไลน์
 </p>
 
-<a href="resume.pdf" target="_blank" class="btn">📄 Download Resume</a>
-<a href="#portfolio" class="btn">🎬 View Portfolio</a>
+<a href="resume.pdf" target="_blank" class="btn">📄 Resume</a>
+
+<a href="#portfolio" class="btn">🎬 Portfolio</a>
 
 </div>
 
 </section>
 
-<section id="portfolio">
+<!-- PORTFOLIO -->
+
+<section id="portfolio" class="fade">
 
 <h2>ผลงานภาพ</h2>
 
-<div class="slider">
+<div class="gallery">
 
-<button class="slide-btn prev" onclick="slide(-1)">❮</button>
-
-<div class="slide-track" id="slider">
-
-<img src="Aira-2.jpg">
-<img src="Alice Summer.jpg">
-<img src="Alice Valentine สีขาว2 .jpg">
-<img src="Chrlotte Chainese.jpg">
+<a href="#img1"><img src="Aira-2.jpg"></a>
+<a href="#img2"><img src="Alice Summer.jpg"></a>
+<a href="#img3"><img src="Alice Valentine สีขาว2 .jpg"></a>
+<a href="#img4"><img src="Chrlotte Chainese.jpg"></a>
 
 </div>
 
-<button class="slide-btn next" onclick="slide(1)">❯</button>
+<!-- LIGHTBOX -->
 
+<div id="img1" class="lightbox">
+<a href="#" class="close-btn">&times;</a>
+<img src="Aira-2.jpg">
+</div>
+
+<div id="img2" class="lightbox">
+<a href="#" class="close-btn">&times;</a>
+<img src="Alice Summer.jpg">
+</div>
+
+<div id="img3" class="lightbox">
+<a href="#" class="close-btn">&times;</a>
+<img src="Alice Valentine สีขาว2 .jpg">
+</div>
+
+<div id="img4" class="lightbox">
+<a href="#" class="close-btn">&times;</a>
+<img src="Chrlotte Chainese.jpg">
 </div>
 
 <br><br>
 
-<h2>ผลงานวิดีโอ</h2>
+<h3>ผลงานวิดีโอ</h3>
 
-<div class="gallery">
+<div class="gallery video">
 
-<div class="video-card" onclick="openVideo('https://drive.google.com/file/d/FILE_ID/preview')">
-<img src="video-cover1.jpg">
-<div class="play-btn">▶</div>
-</div>
+<!-- YOUTUBE -->
 
-<div class="video-card" onclick="openVideo('https://www.youtube.com/embed/VIDEOID')">
-<img src="video-cover2.jpg">
-<div class="play-btn">▶</div>
-</div>
+<iframe src="https://www.youtube.com/embed/i6hYO9OqmsQ"></iframe>
+
+<!-- GOOGLE DRIVE -->
+
+<iframe src="https://drive.google.com/file/d/FILEID/preview"></iframe>
 
 </div>
 
 </section>
-
-<div class="video-popup" id="videoPopup">
-
-<div class="close-video" onclick="closeVideo()">✕</div>
-
-<iframe id="videoFrame"></iframe>
-
-</div>
 
 <footer>
 © Portfolio Website
@@ -399,43 +349,18 @@ document.body.classList.toggle("dark");
 const faders=document.querySelectorAll(".fade");
 
 window.addEventListener("scroll",()=>{
+
 faders.forEach(el=>{
+
 const top=el.getBoundingClientRect().top;
+
 if(top<window.innerHeight-100){
 el.classList.add("show");
 }
+
 });
+
 });
-
-/* VIDEO POPUP */
-
-function openVideo(link){
-
-document.getElementById("videoPopup").style.display="flex";
-document.getElementById("videoFrame").src=link;
-
-}
-
-function closeVideo(){
-
-document.getElementById("videoPopup").style.display="none";
-document.getElementById("videoFrame").src="";
-
-}
-
-/* SLIDER */
-
-let position=0;
-
-function slide(dir){
-
-const slider=document.getElementById("slider");
-
-position += dir*320;
-
-slider.style.transform="translateX(-"+position+"px)";
-
-}
 
 </script>
 
