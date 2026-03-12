@@ -6,17 +6,10 @@
 
 <title>Portfolio - Video Editor</title>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-
 <style>
 
-/* SMOOTH */
-
-html{
-scroll-behavior:smooth;
-}
-
-/* BODY */
+/* Smooth Scroll */
+html{scroll-behavior:smooth;}
 
 body{
 margin:0;
@@ -24,20 +17,11 @@ font-family:Arial;
 background:#f4f4f4;
 color:#333;
 transition:0.4s;
-overflow-x:hidden;
 }
-
-/* DARK MODE */
 
 body.dark{
-background:#020617;
+background:#0f172a;
 color:white;
-}
-
-/* GLOW */
-
-h1,h2,h3{
-text-shadow:0 0 10px rgba(0,217,255,0.6);
 }
 
 /* NAV */
@@ -63,7 +47,7 @@ nav a:hover{
 color:#00d9ff;
 }
 
-/* BUTTON */
+/* Dark Button */
 
 .dark-btn{
 position:fixed;
@@ -75,6 +59,7 @@ border:none;
 padding:12px 15px;
 border-radius:30px;
 cursor:pointer;
+font-size:16px;
 }
 
 /* HERO */
@@ -97,6 +82,12 @@ box-shadow:0 20px 40px rgba(0,0,0,0.2);
 
 .hero-info h1{
 font-size:40px;
+margin-bottom:10px;
+}
+
+.hero-info p{
+font-size:18px;
+line-height:1.6;
 }
 
 /* BUTTON */
@@ -112,6 +103,10 @@ text-decoration:none;
 font-weight:bold;
 }
 
+.btn:hover{
+transform:scale(1.05);
+}
+
 /* SECTION */
 
 section{
@@ -125,13 +120,14 @@ background:white;
 padding:30px;
 border-radius:15px;
 box-shadow:0 10px 30px rgba(0,0,0,0.1);
+transition:0.4s;
 }
 
 body.dark .card{
 background:#1e293b;
 }
 
-/* SKILLS */
+/* SKILL */
 
 .skills span{
 background:#00d9ff;
@@ -140,6 +136,7 @@ border-radius:20px;
 margin:5px;
 display:inline-block;
 color:black;
+font-size:14px;
 }
 
 /* GALLERY */
@@ -159,6 +156,7 @@ transition:0.4s;
 
 .gallery img:hover{
 transform:scale(1.08);
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
 }
 
 /* VIDEO */
@@ -168,12 +166,32 @@ width:100%;
 height:200px;
 border:none;
 border-radius:10px;
-cursor:pointer;
 }
 
-/* LIGHTBOX */
+/* NETFLIX VIDEO POPUP */
 
-.lightbox{
+.video-card{
+cursor:pointer;
+position:relative;
+}
+
+.video-card img{
+width:100%;
+border-radius:10px;
+}
+
+.play-btn{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:40px;
+color:white;
+}
+
+/* POPUP */
+
+.video-popup{
 position:fixed;
 top:0;
 left:0;
@@ -186,16 +204,75 @@ justify-content:center;
 z-index:9999;
 }
 
-.lightbox img{
-max-width:90%;
-max-height:90%;
+.video-popup iframe{
+width:80%;
+height:70%;
+border:none;
+border-radius:10px;
 }
 
-.lightbox:target{
+.close-video{
+position:absolute;
+top:30px;
+right:40px;
+font-size:40px;
+color:white;
+cursor:pointer;
+}
+
+/* SLIDER */
+
+.slider{
+position:relative;
+overflow:hidden;
+}
+
+.slide-track{
 display:flex;
+transition:0.5s;
 }
 
-/* FADE */
+.slide-track img{
+width:100%;
+max-width:300px;
+margin-right:20px;
+border-radius:10px;
+}
+
+.slide-btn{
+position:absolute;
+top:40%;
+background:#111;
+color:white;
+border:none;
+padding:10px 15px;
+cursor:pointer;
+}
+
+.prev{left:0;}
+.next{right:0;}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.hero{
+flex-direction:column;
+text-align:center;
+}
+
+.profile-img{
+width:200px;
+}
+
+.video-popup iframe{
+width:95%;
+height:40%;
+}
+
+}
+
+/* ANIMATION */
 
 .fade{
 opacity:0;
@@ -217,121 +294,19 @@ text-align:center;
 padding:30px;
 }
 
-/* THREEJS CANVAS */
-
-#space{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:-1;
-}
-
-/* ROCKET */
-
-.rocket{
-position:fixed;
-bottom:120px;
-right:30px;
-font-size:40px;
-cursor:pointer;
-transition:0.3s;
-z-index:999;
-}
-
-.rocket:hover{
-transform:scale(1.2);
-}
-
-/* PLANETS */
-
-.planet{
-position:fixed;
-font-size:30px;
-animation:float 10s linear infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-30px)}
-100%{transform:translateY(0)}
-}
-
-/* SHOOTING STAR */
-
-.star{
-position:fixed;
-width:3px;
-height:3px;
-background:white;
-box-shadow:0 0 10px white;
-animation:shoot 2s linear;
-}
-
-@keyframes shoot{
-
-0%{
-transform:translate(0,0);
-opacity:1;
-}
-
-100%{
-transform:translate(-500px,500px);
-opacity:0;
-}
-
-}
-
-/* VIDEO POPUP */
-
-.popup{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.95);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:9999;
-}
-
-.popup iframe{
-width:80%;
-height:60%;
-border:none;
-}
-
-.popup.show{
-display:flex;
-}
-
-.close{
-position:absolute;
-top:20px;
-right:30px;
-font-size:30px;
-color:white;
-cursor:pointer;
-}
-
 </style>
 </head>
 
 <body>
 
-<div id="space"></div>
-
-<div class="rocket" onclick="launchRocket()">🚀</div>
-
 <nav>
+
 <a href="#home">หน้าแรก</a>
 <a href="#about">เกี่ยวกับ</a>
 <a href="#work">ประวัติการทำงาน</a>
 <a href="#portfolio">ผลงาน</a>
 <a href="#contact">ติดต่อ</a>
+
 </nav>
 
 <section id="home" class="hero fade">
@@ -342,58 +317,15 @@ cursor:pointer;
 
 <h1>Preeyanuch Beawbungkerd</h1>
 
-<p>ชื่อเล่น : Nuch</p>
+<p>ชื่อเล่น : Nuch </p>
 
 <p>
 Video Editor / Graphic Designer  
 ผู้สร้างสรรค์สื่อดิจิทัล วิดีโอ และภาพคอนเทนต์
 </p>
 
-<a href="resume.pdf" class="btn">📄 Resume</a>
-<a href="#portfolio" class="btn">🎬 Portfolio</a>
-
-</div>
-
-</section>
-  <!-- EDUCATION -->
-
-<section id="about" class="fade">
-
-<h2>ประวัติการศึกษา</h2>
-
-<div class="card">
-
-<h3>ระดับ ปวส.</h3>
-
-<p><b>สถานศึกษา:</b> วิทยาลัยเทคนิคสมุทรสาคร</p>
-
-<p><b>สาขา:</b> เทคโนโลยีสารสนเทศ</p>
-
-<p><b>ปีการศึกษา:</b> 2565 - 2567</p>
-
-<br>
-
-<h3>ระดับปริญญาตรี</h3>
-
-<p><b>สถานศึกษา:</b> วิทยาลัยเทคนิคสมุทรสาคร</p>
-
-<p><b>สาขา:</b> เทคโนโลยีสารสนเทศ</p>
-
-<p><b>ปีการศึกษา:</b> กำลังศึกษา</p>
-
-<br>
-
-<h3>Skills</h3>
-
-<div class="skills">
-
-<span>Video Editing</span>
-<span>Graphic Design</span>
-<span>AI Media</span>
-<span>Photography</span>
-<span>Content Creation</span>
-
-</div>
+<a href="resume.pdf" target="_blank" class="btn">📄 Download Resume</a>
+<a href="#portfolio" class="btn">🎬 View Portfolio</a>
 
 </div>
 
@@ -401,46 +333,55 @@ Video Editor / Graphic Designer
 
 <section id="portfolio">
 
-<h2>ผลงาน</h2>
+<h2>ผลงานภาพ</h2>
 
-<div class="gallery">
+<div class="slider">
 
-<a href="#img1"><img src="Aira-2.jpg"></a>
-<a href="#img2"><img src="Alice Summer.jpg"></a>
-<a href="#img3"><img src="Alice Valentine สีขาว2 .jpg"></a>
-<a href="#img4"><img src="Chrlotte Chainese.jpg"></a>
+<button class="slide-btn prev" onclick="slide(-1)">❮</button>
+
+<div class="slide-track" id="slider">
+
+<img src="Aira-2.jpg">
+<img src="Alice Summer.jpg">
+<img src="Alice Valentine สีขาว2 .jpg">
+<img src="Chrlotte Chainese.jpg">
 
 </div>
 
-<div id="img1" class="lightbox"><a href="#"><img src="Aira-2.jpg"></a></div>
-<div id="img2" class="lightbox"><a href="#"><img src="Alice Summer.jpg"></a></div>
-<div id="img3" class="lightbox"><a href="#"><img src="Alice Valentine สีขาว2 .jpg"></a></div>
-<div id="img4" class="lightbox"><a href="#"><img src="Chrlotte Chainese.jpg"></a></div>
+<button class="slide-btn next" onclick="slide(1)">❯</button>
+
+</div>
 
 <br><br>
 
-<div class="gallery video">
+<h2>ผลงานวิดีโอ</h2>
 
-<iframe onclick="openVideo('https://www.youtube.com/embed/i6hYO9OqmsQ')" src="https://www.youtube.com/embed/i6hYO9OqmsQ"></iframe>
+<div class="gallery">
 
-<iframe onclick="openVideo('https://www.youtube.com/embed/VIDEOID2')" src="https://www.youtube.com/embed/VIDEOID2"></iframe>
+<div class="video-card" onclick="openVideo('https://drive.google.com/file/d/FILE_ID/preview')">
+<img src="video-cover1.jpg">
+<div class="play-btn">▶</div>
+</div>
+
+<div class="video-card" onclick="openVideo('https://www.youtube.com/embed/VIDEOID')">
+<img src="video-cover2.jpg">
+<div class="play-btn">▶</div>
+</div>
 
 </div>
 
 </section>
 
-<div id="videoPopup" class="popup">
+<div class="video-popup" id="videoPopup">
 
-<span class="close" onclick="closeVideo()">✖</span>
+<div class="close-video" onclick="closeVideo()">✕</div>
 
-<iframe id="popupFrame"></iframe>
+<iframe id="videoFrame"></iframe>
 
 </div>
 
 <footer>
-
 © Portfolio Website
-
 </footer>
 
 <button class="dark-btn" onclick="darkMode()">🌙</button>
@@ -453,115 +394,48 @@ function darkMode(){
 document.body.classList.toggle("dark");
 }
 
-/* ROCKET */
+/* SCROLL ANIMATION */
 
-function launchRocket(){
+const faders=document.querySelectorAll(".fade");
 
-const r=document.querySelector(".rocket")
-
-r.style.transform="translateY(-400px)"
-
-setTimeout(()=>{
-r.style.transform="translateY(0)"
-},2000)
-
+window.addEventListener("scroll",()=>{
+faders.forEach(el=>{
+const top=el.getBoundingClientRect().top;
+if(top<window.innerHeight-100){
+el.classList.add("show");
 }
-
-/* SHOOTING STAR */
-
-function createStar(){
-
-const star=document.createElement("div")
-
-star.className="star"
-
-star.style.top=Math.random()*window.innerHeight+"px"
-star.style.left=Math.random()*window.innerWidth+"px"
-
-document.body.appendChild(star)
-
-setTimeout(()=>{
-
-star.remove()
-
-},2000)
-
-}
-
-setInterval(createStar,1500)
+});
+});
 
 /* VIDEO POPUP */
 
-function openVideo(src){
+function openVideo(link){
 
-document.getElementById("videoPopup").classList.add("show")
-
-document.getElementById("popupFrame").src=src
+document.getElementById("videoPopup").style.display="flex";
+document.getElementById("videoFrame").src=link;
 
 }
 
 function closeVideo(){
 
-document.getElementById("videoPopup").classList.remove("show")
-
-document.getElementById("popupFrame").src=""
-
-}
-
-/* FADE */
-
-const faders=document.querySelectorAll(".fade")
-
-window.addEventListener("scroll",()=>{
-
-faders.forEach(el=>{
-
-const top=el.getBoundingClientRect().top
-
-if(top<window.innerHeight-100){
-
-el.classList.add("show")
+document.getElementById("videoPopup").style.display="none";
+document.getElementById("videoFrame").src="";
 
 }
 
-})
+/* SLIDER */
 
-})
+let position=0;
 
-/* THREE JS GALAXY */
+function slide(dir){
 
-const scene=new THREE.Scene()
+const slider=document.getElementById("slider");
 
-const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000)
+position += dir*320;
 
-const renderer=new THREE.WebGLRenderer({alpha:true})
-
-renderer.setSize(window.innerWidth,window.innerHeight)
-
-document.getElementById("space").appendChild(renderer.domElement)
-
-const geometry=new THREE.SphereGeometry(5,32,32)
-
-const material=new THREE.MeshBasicMaterial({wireframe:true,color:0x00d9ff})
-
-const planet=new THREE.Mesh(geometry,material)
-
-scene.add(planet)
-
-camera.position.z=10
-
-function animate(){
-
-requestAnimationFrame(animate)
-
-planet.rotation.x+=0.003
-planet.rotation.y+=0.004
-
-renderer.render(scene,camera)
+slider.style.transform="translateX(-"+position+"px)";
 
 }
-
-animate()
 
 </script>
 
