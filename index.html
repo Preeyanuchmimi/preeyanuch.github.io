@@ -8,7 +8,9 @@
 
 <style>
 
-html{scroll-behavior:smooth;}
+html{
+scroll-behavior:smooth;
+}
 
 body{
 margin:0;
@@ -24,6 +26,7 @@ color:white;
 }
 
 /* NAV */
+
 nav{
 background:#111;
 padding:15px;
@@ -41,9 +44,12 @@ text-decoration:none;
 font-size:18px;
 }
 
-nav a:hover{color:#00d9ff;}
+nav a:hover{
+color:#00d9ff;
+}
 
-/* DARK MODE */
+/* DARK MODE BUTTON */
+
 .dark-btn{
 position:fixed;
 right:20px;
@@ -54,9 +60,11 @@ border:none;
 padding:12px 15px;
 border-radius:30px;
 cursor:pointer;
+font-size:16px;
 }
 
 /* HERO */
+
 .hero{
 min-height:80vh;
 display:flex;
@@ -73,7 +81,17 @@ border-radius:20px;
 box-shadow:0 20px 40px rgba(0,0,0,0.2);
 }
 
-.hero-info h1{font-size:40px;}
+.hero-info h1{
+font-size:40px;
+margin-bottom:10px;
+}
+
+.hero-info p{
+font-size:18px;
+line-height:1.6;
+}
+
+/* BUTTON */
 
 .btn{
 display:inline-block;
@@ -83,22 +101,47 @@ background:#00d9ff;
 color:black;
 border-radius:30px;
 text-decoration:none;
+font-weight:bold;
+}
+
+.btn:hover{
+transform:scale(1.05);
 }
 
 /* SECTION */
-section{padding:80px 10%;}
+
+section{
+padding:80px 10%;
+}
 
 /* CARD */
+
 .card{
 background:white;
 padding:30px;
 border-radius:15px;
 box-shadow:0 10px 30px rgba(0,0,0,0.1);
+transition:0.4s;
 }
 
-body.dark .card{background:#1e293b;}
+body.dark .card{
+background:#1e293b;
+}
+
+/* SKILL */
+
+.skills span{
+background:#00d9ff;
+padding:7px 14px;
+border-radius:20px;
+margin:5px;
+display:inline-block;
+color:black;
+font-size:14px;
+}
 
 /* GALLERY */
+
 .gallery{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -109,17 +152,52 @@ gap:25px;
 width:100%;
 border-radius:10px;
 cursor:pointer;
-transition:0.3s;
+transition:0.4s;
 }
 
 .gallery img:hover{
-transform:scale(1.05);
+transform:scale(1.08);
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* LIGHTBOX IMAGE */
+
+.lightbox{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+.lightbox img{
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+}
+
+.lightbox:target{
+display:flex;
 }
 
 /* VIDEO */
-.video-box{cursor:pointer;}
+
+.video-box{
+position:relative;
+cursor:pointer;
+}
+
+.video-box img{
+width:100%;
+border-radius:10px;
+}
 
 /* VIDEO POPUP */
+
 .video-popup{
 position:fixed;
 top:0;
@@ -140,17 +218,19 @@ border:none;
 border-radius:10px;
 }
 
-/* CLOSE */
+/* CLOSE BUTTON */
+
 .close{
 position:absolute;
-top:30px;
-right:50px;
-font-size:40px;
+top:40px;
+right:60px;
+font-size:35px;
 color:white;
 cursor:pointer;
 }
 
 /* ANIMATION */
+
 .fade{
 opacity:0;
 transform:translateY(30px);
@@ -161,6 +241,8 @@ transition:1s;
 opacity:1;
 transform:translateY(0);
 }
+
+/* FOOTER */
 
 footer{
 background:#111;
@@ -175,9 +257,13 @@ padding:30px;
 <body>
 
 <nav>
+
 <a href="#home">หน้าแรก</a>
+<a href="#about">เกี่ยวกับ</a>
+<a href="#work">ประวัติการทำงาน</a>
 <a href="#portfolio">ผลงาน</a>
 <a href="#contact">ติดต่อ</a>
+
 </nav>
 
 <section id="home" class="hero fade">
@@ -185,52 +271,204 @@ padding:30px;
 <img src="Portfolio.jpg" class="profile-img">
 
 <div class="hero-info">
-<h1>Preeyanuch Beawbungkerd</h1>
-<p>Video Editor / Graphic Designer</p>
 
+<h1>Preeyanuch Beawbungkerd</h1>
+
+<p>ชื่อเล่น : Nuch </p>
+
+<p>
+Video Editor / Graphic Designer  
+ผู้สร้างสรรค์สื่อดิจิทัล วิดีโอ และภาพคอนเทนต์
+สำหรับการตลาดออนไลน์และโซเชียลมีเดีย
+</p>
+
+<a href="resume.pdf" target="_blank" class="btn">📄 Download Resume</a>
 <a href="#portfolio" class="btn">🎬 View Portfolio</a>
+
 </div>
 
 </section>
 
-<!-- PORTFOLIO -->
-<section id="portfolio" class="fade">
+<section class="fade">
 
-<h2>ผลงานวิดีโอ</h2>
+<h2>การศึกษา</h2>
+
+<div class="card">
+
+<p><b>ระดับ ปวส.</b></p>
+<p>วิทยาลัยเทคนิคสมุทรสาคร</p>
+<p>สาขา เทคโนโลยีสารสนเทศ</p>
+
+<br>
+
+<p><b>ระดับปริญญาตรี</b></p>
+<p>วิทยาลัยเทคนิคสมุทรสาคร</p>
+<p>สาขา เทคโนโลยีสารสนเทศ</p>
+
+<h3>Skills</h3>
+
+<div class="skills">
+
+<span>Video Editing</span>
+<span>Graphic Design</span>
+<span>AI Media</span>
+<span>Photography</span>
+<span>Content Creation</span>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="work" class="fade">
+
+<h2>ประวัติการทำงาน</h2>
+
+<div class="card">
+
+<h3>บริษัท รับเบอร์โซล จำกัด</h3>
+
+<p>2567 - ปัจจุบัน</p>
+
+<p><b>ตำแหน่ง</b> Video Editor / Graphic Designer</p>
+
+<ul>
+
+<li>ถ่ายทำวิดีโอและภาพสินค้า</li>
+<li>ตัดต่อวิดีโอสำหรับ Social Media</li>
+<li>ออกแบบภาพโฆษณา</li>
+<li>สร้างสื่อ AI</li>
+<li>พัฒนาคอนเทนต์สำหรับแบรนด์</li>
+
+</ul>
+
+</div>
+
+</section>
+
+<section id="portfolio" class="fade">
+ <h2>ผลงาน</h2>
+
+<h3>ผลงานภาพ</h3>
 
 <div class="gallery">
-
-<!-- VIDEO 1 -->
-<div class="video-box" onclick="openVideo('1AbCdEf123456')">
-<img src="thumb1.jpg">
-</div>
-
-<!-- VIDEO 2 -->
-<div class="video-box" onclick="openVideo('2XyZaBc987654')">
-<img src="thumb2.jpg">
-</div>
+ภาพสื่อโดยใช้ Ai
+<a href="#img1"><img src="Aira-2.jpg"></a>
+<a href="#img2"><img src="Alice Summer.jpg"></a>
+<a href="#img3"><img src="Alice Valentine สีขาว2 .jpg"></a>
+<a href="#img4"><img src="Chrlotte Chainese.jpg"></a>
 
 </div>
 
-</section>
+<div id="img1" class="lightbox"><a href="#"><img src="Aira-2.jpg"></a></div>
+<div id="img2" class="lightbox"><a href="#"><img src="Alice Summer.jpg"></a></div>
+<div id="img3" class="lightbox"><a href="#"><img src="Alice Valentine สีขาว2 .jpg"></a></div>
+<div id="img4" class="lightbox"><a href="#"><img src="Chrlotte Chainese.jpg"></a></div>
 
-<!-- CONTACT -->
+<br><br>
+
+<div class="gallery">
+ภาพสื่อ/ภาพโปรโมชั่น
+<a href="#img1"><img src="Monobo.jpg"></a>
+<a href="#img2"><img src="Mid Mounth Lazada.jpg"></a>
+<a href="#img3"><img src="Mary Jane 1.jpg"></a>
+<a href="#img4"><img src="High Muffin.jpg"></a>
+
+</div>
+
+<div id="img1" class="lightbox"><a href="#"><img src="Monobo.jpg"></a></div>
+<div id="img2" class="lightbox"><a href="#"><img src="Mid Mounth Lazada.jpg"></a></div>
+<div id="img3" class="lightbox"><a href="#"><img src="Mary Jane 1.jpg"></a></div>
+<div id="img4" class="lightbox"><a href="#"><img src="High Muffin.jpg"></a></div>
+
+<br><br>
+
+<div class="gallery">
+ภาพ AD ต่างๆ
+<a href="#img1"><img src="แก้ Becca Craft คน 17-12-68.jpg"></a>
+<a href="#img2"><img src="Zoey Silk ขาว 13-12-68.jpg"></a>
+<a href="#img3"><img src="Diamond 6-12-68 .jpg"></a>
+<a href="#img4"><img src="Unique Lilt 21-02-69 .jpg"></a>
+</div>
+
+<div id="img1" class="lightbox"><a href="#"><img src="แก้ Becca Craft คน 17-12-68.jpg"></a></div>
+<div id="img2" class="lightbox"><a href="#"><img src="Zoey Silk ขาว 13-12-68.jpg"></a></div>
+<div id="img3" class="lightbox"><a href="#"><img src="Diamond 6-12-68 .jpg"></a></div>
+<div id="img4" class="lightbox"><a href="#"><img src="Unique Lilt 21-02-69 .jpg"></a></div>
+<br><br>
+
+
+<div class="gallery">
+ภาพสื่อต่างๆ
+<a href="#img1"><img src="moniga toast.jpg"></a>
+<a href="#img2"><img src="Shopee.jpg"></a>
+<a href="#img3"><img src="Facebook.jpg"></a>
+<a href="#img4"><img src="11.jpg"></a>
+</div>
+
+<div id="img1" class="lightbox"><a href="#"><img src="moniga toast.jpg"></a></div>
+<div id="img2" class="lightbox"><a href="#"><img src="Shopee.jpg"></a></div>
+<div id="img3" class="lightbox"><a href="#"><img src="Facebook.jpg"></a></div>
+<div id="img4" class="lightbox"><a href="#"><img src="11.jpg"></a></div>
+<br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+<h3>ผลงานวิดีโอ</h3>
+
+<div class="gallery video">
+คลิปวีดีโออินฟลู
+
+<iframe src="https://www.youtube.com/embed/i6hYO9OqmsQ" allowfullscreen></iframe>
+
+<iframe src="https://www.youtube.com/embed/VIDEOID2" allowfullscreen></iframe>
+
+</div>
 <section id="contact" class="fade">
+
+<h2>ติดต่อ</h2>
+
 <div class="card">
+
 <p>📞 08X-XXX-XXXX</p>
 <p>📧 yourmail@email.com</p>
+<p>💬 Facebook / Line</p>
+
 </div>
+
 </section>
 
 <footer>
 © Portfolio Website
 </footer>
-
-<!-- VIDEO POPUP -->
-<div id="videoPopup" class="video-popup">
-<span class="close" onclick="closeVideo()">✖</span>
-<iframe id="videoFrame" allowfullscreen></iframe>
-</div>
 
 <button class="dark-btn" onclick="darkMode()">🌙</button>
 
@@ -240,7 +478,6 @@ function darkMode(){
 document.body.classList.toggle("dark");
 }
 
-/* ANIMATION */
 const faders=document.querySelectorAll(".fade");
 
 window.addEventListener("scroll",()=>{
@@ -252,11 +489,9 @@ el.classList.add("show");
 });
 });
 
-/* GOOGLE DRIVE VIDEO */
 function openVideo(id){
 document.getElementById("videoPopup").style.display="flex";
-document.getElementById("videoFrame").src=
-"https://drive.google.com/file/d/"+id+"/preview";
+document.getElementById("videoFrame").src="https://drive.google.com/file/d/"+id+"/preview";
 }
 
 function closeVideo(){
