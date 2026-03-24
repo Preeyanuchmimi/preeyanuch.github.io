@@ -306,84 +306,52 @@ Video Editor / Graphic Designer
 <p>สาขา เทคโนโลยีสารสนเทศ</p>
 
 <h3>Skills</h3>
-<h3>Programs</h3>
 
-<div class="programs">
-
-<div class="program">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg">
-<p>Canva</p>
-</div>
-
-<div class="program">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg">
-<p>Illustrator</p>
-</div>
-
-<div class="program">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg">
-<p>Photoshop</p>
-</div>
-
-<div class="program">
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-plain.svg">
-<p>Premiere Pro</p>
-</div>
-
-<div class="program">
-<img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/CapCut_logo.png">
-<p>CapCut</p>
-</div>
-
-</div>
-
-
-
-/* PROGRAMS */
-
+<!-- PROGRAMS -->
+<style>
 .programs{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-gap:20px;
-text-align:center;
-margin-top:20px;
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:15px;
 }
 
 .program{
-background:white;
-padding:15px;
-border-radius:15px;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
+background:#00d9ff;
+color:black;
+padding:8px 16px;
+border-radius:20px;
+font-size:14px;
+font-weight:bold;
 transition:0.3s;
 }
 
-body.dark .program{
-background:#1e293b;
-}
-
-.program img{
-width:40px; /* 👈 ปรับให้เล็กลง */
-margin-bottom:8px;
-}
-
-.program p{
-font-size:14px;
-}
-
 .program:hover{
-transform:translateY(-5px);
+transform:scale(1.05);
 }
 
+body.dark .program{
+background:#38bdf8;
+}
+</style>
+
+<h3>Programs</h3>
+
+<div class="programs">
+<div class="program">Canva</div>
+<div class="program">Illustrator</div>
+<div class="program">Photoshop</div>
+<div class="program">Premiere Pro</div>
+<div class="program">CapCut</div>
+</div>
 
 
-
-
-
-
+ 
 
 
 
  
+
 <div class="skills">
 
 <span>Video Editing</span>
@@ -491,33 +459,6 @@ transform:translateY(-5px);
 <br><br>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  
 <h3>ผลงานวิดีโอ</h3>
 
@@ -525,6 +466,7 @@ transform:translateY(-5px);
 คลิปวีดีโออินฟลู
 
 <iframe src="https://www.youtube.com/embed/i6hYO9OqmsQ" allowfullscreen></iframe>
+
 </div>
 <section id="contact" class="fade">
 
