@@ -336,6 +336,54 @@ Video Editor / Graphic Designer
 </div>
 
 </div>
+
+
+
+/* PROGRAMS */
+
+.programs{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+gap:20px;
+text-align:center;
+margin-top:20px;
+}
+
+.program{
+background:white;
+padding:15px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+transition:0.3s;
+}
+
+body.dark .program{
+background:#1e293b;
+}
+
+.program img{
+width:40px; /* 👈 ปรับให้เล็กลง */
+margin-bottom:8px;
+}
+
+.program p{
+font-size:14px;
+}
+
+.program:hover{
+transform:translateY(-5px);
+}
+
+
+
+
+
+
+
+
+
+
+ 
 <div class="skills">
 
 <span>Video Editing</span>
